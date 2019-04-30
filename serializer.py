@@ -103,13 +103,24 @@ times["yaml"] = {"serialization": (end1 - start) / N, "deserialization": (end2 -
 out = json.dumps(times, indent=2)
 print(out)
 
-print(times.keys())
-print(times.values())
+keys = times.keys()
+values = times.values()
+serialization = [x["serialization"] * 1000 for x in values ]
+deserialization = [x["deserialization"] * 1000 for x in values ]
+
 
 # plot
 import matplotlib.pyplot as plt
-import numpy as np
 
 fig = plt.figure()
-
+ax1 = plt.subplot(1,2,1)
+ax1.bar(keys, serialization)
+ax1.set_ylabel("ms")
+ax1.set_title("Serialization times")
+ax1.set_ylim([0,2])
+ax2 = plt.subplot(1,2,2)
+ax2.set_title("Deserialization times")
+ax2.bar(keys,deserialization)
+ax2.set_ylim([0,2])
+ax2.set_ylabel("ms")
 plt.show()
